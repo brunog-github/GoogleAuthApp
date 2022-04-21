@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,4 +38,12 @@ class LoginViewModel @Inject() constructor(
             repository.saveSignedInState(signedIn = signedIn)
         }
     }
+
+    fun updateMessageBarState() {
+        _messageBarState.value = MessageBarState(error = GoogleAccountNotFoundException())
+    }
 }
+
+class GoogleAccountNotFoundException(
+    override val message: String? = "Google Account Not Found"
+): Exception()
